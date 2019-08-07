@@ -34,7 +34,7 @@ async function login(parent, args, context, info) {
   }
 }
 
-async function vote(parent, ards, context, info) {
+async function vote(parent, args, context, info) {
   const userId = getUserId(context)
 
   const linkExists = await context.prisma.$exists.vote({
@@ -42,7 +42,7 @@ async function vote(parent, ards, context, info) {
     link: { id: args.linkId }
   })
   if (linkExists) {
-    throw new Error(`Already voed for link: ${args.linkId}`)
+    throw new Error(`Already voted for link: ${args.linkId}`)
   }
 
   return context.prisma.createVote({
@@ -61,8 +61,8 @@ function post(parent, args, context, info) {
 }
 
 module.exports = {
+  post,
   signup,
   login,
-  post,
   vote,
 }
